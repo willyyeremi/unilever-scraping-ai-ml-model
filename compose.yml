@@ -1,0 +1,29 @@
+name: unilever-scraping
+
+services:
+  ai-cahya_bert-base-indonesian-522m:
+    build: 
+      context: . 
+      dockerfile: ./dockerfile/dockerfile.cahya_bert-base-indonesian-522M
+    image:
+      unilever-scraping-ai-cahya_bert-base-indonesian-522m
+    container_name: unilever-scraping-ai-cahya_bert-base-indonesian-522m
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./api/cahya_bert-base-indonesian-522M:/home/project_home/project_workdir/api 
+      - ./etc/cahya_bert-base-indonesian-522M:/home/project_home/project_workdir/etc 
+    environment:
+      - MODEL_PATH=/home/project_home/project_workdir/ai_model
+    working_dir: /home/project_home/project_workdir/api
+    command: >
+      bash -c "
+      python app.py
+      "
+    networks:
+      - shared-network
+
+networks:
+  shared-network:
+    name: unilever-scraping-network
+    external: true

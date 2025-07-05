@@ -1,0 +1,20 @@
+FROM python:3.13.5
+
+USER root
+
+ENV PROJECT_HOME=/home/project_home/project_workdir
+ENV MODEL_PATH=$PROJECT_HOME/ai_model
+
+RUN useradd -ms /bin/bash project_home && \
+    mkdir -p $PROJECT_HOME && \
+    chown -R project_home:project_home /home/project_home
+WORKDIR $PROJECT_HOME
+
+RUN mkdir -p $PROJECT_HOME/api
+COPY api/cahya_bert-base-indonesian-522M/requirements.txt ./api/requirements.txt
+RUN pip install --no-cache-dir -r ./api/requirements.txt
+
+RUN mkdir -p $PROJECT_HOME/etc
+RUN mkdir -p $PROJECT_HOME/ai_model
+COPY etc/cahya_bert-base-indonesian-522M/setup_model.py ./etc/setup_model.py
+RUN python ./etc/setup_model.py --model-path $MODEL_PATH --model-name cahya/bert-base-indonesian-522M
