@@ -13,12 +13,10 @@ services:
     volumes:
       - ./api/cahya_bert-base-indonesian-522M:/home/project_home/project_workdir/api 
       - ./etc/cahya_bert-base-indonesian-522M:/home/project_home/project_workdir/etc 
-    environment:
-      - MODEL_PATH=/home/project_home/project_workdir/ai_model
     working_dir: /home/project_home/project_workdir/api
     command: >
       bash -c "
-      python app.py
+      gunicorn --bind 0.0.0.0:9000 main:app
       "
     networks:
       - shared-network

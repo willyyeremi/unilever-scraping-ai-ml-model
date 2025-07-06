@@ -19,7 +19,7 @@ predict_bp = Blueprint("data", __name__, url_prefix = "/predict")
 # Load model and tokenizer
 ##############################
 
-MODEL_PATH = os.environ.get("MODEL_PATH", "./ai_model")
+MODEL_PATH = os.environ.get("MODEL_PATH", "./base_model")
 tokenizer = BertTokenizer.from_pretrained(MODEL_PATH)
 model = BertForSequenceClassification.from_pretrained(MODEL_PATH)
 model.eval()  

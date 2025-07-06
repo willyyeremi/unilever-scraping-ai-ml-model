@@ -1,3 +1,4 @@
-torch 
-transformers 
-flask
+# torch 
+# transformers 
+# flask
+gunicorn
